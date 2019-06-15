@@ -1,9 +1,6 @@
 package MyGraph;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 生成最小生成树(Mininum Spanning Tree)
@@ -49,10 +46,10 @@ public class MinTree {
      * 构造函数  初始化邻接矩阵存储的图得到邻接矩阵
      */
     public MinTree(){
-        graphMatrix=new GraphMatrix(PrintGraph.matrix);
-        matrix=graphMatrix.getGraph().weight;
+        this.graphMatrix=new GraphMatrix(PrintGraph.matrix);
+        this.matrix=this.graphMatrix.getGraph().weight;
         //PrintGraph.printMSTmatrix(matrix);
-        this.vexnum=graphMatrix.getVexnum();
+        this.vexnum=this.graphMatrix.getVexnum();
         this.MSTmatrix=new double[this.vexnum][this.vexnum];
         this.T=new edge[this.vexnum];
         for (int i = 0; i < this.vexnum; i++){
@@ -82,7 +79,7 @@ public class MinTree {
      *
      * @return double[][]  返回最小生成树 矩阵
      */
-    public double[][] prime(int k){
+    public double[][] Prime(int k){
         this.flag=new boolean[this.vexnum];
         int i=0,j=0,s=0,t=0,m=0,v=0;
         double d,min,max=100000000;
@@ -159,17 +156,20 @@ public class MinTree {
          *   构造T 初始 n个节点 没有边 完全非连通图
          * */
         GraphMatrix Tgraph=new GraphMatrix(graphMatrix);
-        while(Tgraph.getEdgenum()<this.vexnum-1){
+        while(Tgraph.getGraph().E.size()<this.vexnum-1){
             Iterator<edge> it= graphMatrix.getGraph().E.iterator();
             edge a=new edge();
-            if(it.hasNext())   a=it.next();      //原图的E实现了自然排序，取出第一个即为最小的边
-            graphMatrix.getGraph().E.remove(a);  //从原图的E中删除最小的边
+            while(it.hasNext())   a=it.next();      //原图的E实现了自然排序，取出第最后一个即为最小的边
+            ((TreeSet)graphMatrix.getGraph().E).pollLast();
+            //从原图的E中删除最小的边
             Tgraph.getGraph().E.add(a);           //加入到T的边集中
-            int count=Tgraph.TRAVER(1);     //得到T的连通分图的数量
+            Tgraph.getGraph().weight[a.formvex][a.endvex]=a.weight;
+            Tgraph.getGraph().weight[a.endvex][a.formvex]=a.weight;
+            int count=Tgraph.TRAVER(1,false);     //得到T的连通分图的数量
             int e=Tgraph.getGraph().E.size();    // 边数
             int v=Tgraph.getGraph().V.size();    //顶点数
             if((e+count)==(v+1)){
-                Tgraph.getGraph().E.remove(a);
+                ((TreeSet)Tgraph.getGraph().E).remove(a);
             }                //判断是否存在回路
         }
         //  将最小生成树边集转化成邻接矩阵
@@ -231,11 +231,9 @@ class edge implements Comparable<edge>{
      */
     @Override
     public int compareTo(edge o) {
-        if(this.weight<o.weight)
-        return -1;
-        if(this.weight>o.weight)
-            return 1;
-        return 0;
+        if(this.weight<=o.weight)
+        return 1;
+        else return -1;
     }
 }
 

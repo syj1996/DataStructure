@@ -156,7 +156,7 @@ public class GraphMatrix {
                 //节点间有路径且没有被访问过  进行访问并对visited做标记
                 if(type)
                     System.out.println(this.graph.vexterix[i]+"和"+this.graph.vexterix[k]+"的路径长度为"+this.graph.weight[i][k]);
-                DFS(k);
+                DFS(k,type);
             }
         }
         if(type)
@@ -225,6 +225,7 @@ public class GraphMatrix {
                 System.out.println("连通分图"+(count+1)+"遍历完成！");
                 count++;
             }
+
         }
         return count;
     }
@@ -280,6 +281,12 @@ class Graph{
         for (int i = 0; i <matrix[0].length ; i++) {
             this.vexterix[i]=String.valueOf(i);
             this.V.add(new vexterix(this.vexterix[i],i));
+        }
+        for (int i = 0; i <matrix[0].length ; i++) {
+            for (int j = i; j <matrix[0].length  ; j++) {
+                if(matrix[i][j]!=100000000)
+                 this.E.add(new edge(i,j,matrix[i][j]));
+            }
         }
         this.weight=matrix;
     }

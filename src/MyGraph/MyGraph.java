@@ -19,7 +19,7 @@ public class MyGraph {
 //        graphList.DFSL(1);
 //        graphList.BFSL(1);
 //          MinTree minTree=new MinTree();
-//          minTree.prime(1);
+//          minTree.Prime(1);
 
         MinTree mintree=new MinTree();
         mintree.Kruskal();
