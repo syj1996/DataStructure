@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" addBOMForNewFiles="with NO BOM">
+    <file url="file://$PROJECT_DIR$/src/GraphList.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/MyGraph/GraphMatrix.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/MyGraph/MinTree.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/MyGraph/MyGraph.java" charset="GBK" />
+    <file url="PROJECT" charset="GBK" />
+  </component>
+</project>
