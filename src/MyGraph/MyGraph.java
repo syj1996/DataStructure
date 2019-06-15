@@ -22,7 +22,7 @@ public class MyGraph {
 //          minTree.prime(1);
 
         MinTree mintree=new MinTree();
-        mintree.prime(1);
+        mintree.Kruskal();
         Scanner src=new Scanner(System.in);
         src.next();
     }

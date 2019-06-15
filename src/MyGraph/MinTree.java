@@ -182,6 +182,13 @@ public class MinTree {
             this.MSTmatrix[s][v]=a.weight;
             this.MSTmatrix[v][s]=a.weight;
         }
+        //输出最小生成树矩阵
+        for ( int i = 0; i < this.MSTmatrix[0].length; i++) {
+            for (int  j = 0; j <this.MSTmatrix[0].length; j++) {
+                System.out.print(this.MSTmatrix[i][j]+"\t");
+            }
+            System.out.println("\n");
+        }
         return this.MSTmatrix;
     }
 

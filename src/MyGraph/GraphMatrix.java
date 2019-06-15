@@ -97,7 +97,7 @@ public class GraphMatrix {
      */
     public GraphMatrix(GraphMatrix graphMatrix) {
         this.vexnum=graphMatrix.getVexnum();
-        this.edgenum=graphMatrix.getEdgenum();
+        this.edgenum=0;
         this.counter=0;
         this.graph=new Graph();
         this.graph.weight=new double[this.vexnum][this.vexnum];
@@ -134,70 +134,100 @@ public class GraphMatrix {
      * 深度搜索
      * @param i  输入i为开始搜索的位置
      */
-   public void DFS(int i){  //深度搜索
+    public void DFS(int i){  //深度搜索
+        DFS(i,true);
+    } //深度搜索
+    /**
+     * 深度搜索
+     * @param i   输入i为开始搜索的位置
+     * @param type   true 显示提示信息 false不提示文本作为调用函数
+     */
+    public void DFS(int i,boolean type){
+        int count=this.counter;
+        this.counter++;
+        if(count==0){initial();}
 
-       int count=this.counter;
-       this.counter++;
-       if(count==0){initial();}
-
-       this.visited[i]=true;
-       System.out.println("node:"+this.graph.vexterix[i]+"开始访问");
-       for (int k = 0; k < vexnum; k++) {  //依次搜索vi+1的节点
-           if((this.graph.weight[i][k]!=100000000) &&(!this.visited[k]))
-           {
-               //节点间有路径且没有被访问过  进行访问并对visited做标记
-               System.out.println(this.graph.vexterix[i]+"和"+this.graph.vexterix[k]+"的路径长度为"+this.graph.weight[i][k]);
-               DFS(k);
-           }
-       }
-       System.out.println("node:"+this.graph.vexterix[i]+"访问结束!");
-       if(count==0)System.out.println("访问结束!");
-   } //深度搜索
+        this.visited[i]=true;
+        if(type)
+            System.out.println("node:"+this.graph.vexterix[i]+"开始访问");
+        for (int k = 0; k < vexnum; k++) {  //依次搜索vi+1的节点
+            if((this.graph.weight[i][k]!=100000000) &&(!this.visited[k]))
+            {
+                //节点间有路径且没有被访问过  进行访问并对visited做标记
+                if(type)
+                    System.out.println(this.graph.vexterix[i]+"和"+this.graph.vexterix[k]+"的路径长度为"+this.graph.weight[i][k]);
+                DFS(k);
+            }
+        }
+        if(type)
+        {System.out.println("node:"+this.graph.vexterix[i]+"访问结束!");
+            if(count==0)System.out.println("访问结束!");}
+    }
 
     /**广度搜索
      * @param i   输入i为开始搜索的位置
      */
-   public void BFS(int i){
-       int j,k;
-       Queue<Integer> queue=new ArrayDeque<>(this.vexnum);
-       System.out.println("node:"+this.graph.vexterix[i]+"开始访问");
-       this.visited[i]=true;
-       queue.add(new Integer(i));
-       while(!queue.isEmpty()){
-           j=(((ArrayDeque<Integer>) queue).pop()).intValue();
-           for ( k = 0; k < this.vexnum; k++) {
-               if(this.graph.weight[j][k]!=0 && (!this.visited[k])){
-                   {
-                       this.visited[k]=true;
-                       queue.add(new Integer(k)); //把已经访问的节点入队
-                   }
-               }
-           }
-           System.out.println("node:"+this.graph.vexterix[k]+"访问结束");
-       }
-       System.out.println("访问结束!");
+    public void BFS(int i){
+      BFS(i,true);
    }    //广度搜索
 
+    /**
+     * 广度搜索
+     * @param i 输入i为开始搜索的位置
+     * @param type true 显示提示文本  false不提示文本作为调用函数
+     */
+    public void BFS(int i,boolean type){
+        int j,k;
+        Queue<Integer> queue=new ArrayDeque<>(this.vexnum);
+        if(type)
+        System.out.println("node:"+this.graph.vexterix[i]+"开始访问");
+        this.visited[i]=true;
+        queue.add(new Integer(i));
+        while(!queue.isEmpty()){
+            j=(((ArrayDeque<Integer>) queue).pop()).intValue();
+            for ( k = 0; k < this.vexnum; k++) {
+                if(this.graph.weight[j][k]!=0 && (!this.visited[k])){
+                    {
+                        this.visited[k]=true;
+                        queue.add(new Integer(k)); //把已经访问的节点入队
+                    }
+                }
+            }
+            if(type)
+            System.out.println("node:"+this.graph.vexterix[k]+"访问结束");
+        }
+        if(type)
+        System.out.println("访问结束!");
+    }
     /**
      * 非连通图的遍历
      * @param type=1   type=1,基础算法为深度搜索 否则为广度搜索
      * @return count   返回非连通图的连通分图个数
      */
     public int TRAVER(int type){
+        return TRAVER(type,true);
+    }
+
+    /**
+     * @param type  type=1 深度搜索 反之为广度搜索
+     * @param type1    type1=true 为显示提示文本 false不提示文本作为调用函数
+     * @return
+     */
+    public int TRAVER(int type,boolean type1){
         initial();
         int count=0;
         for (int i = 0; i < this.vexnum ;i++) {
             if(!this.visited[i]){
                 if(type==1){
-                    DFS(i);}
-                else BFS(i);
+                    DFS(i,type1);}
+                else BFS(i,type1);
+                if(type1)
                 System.out.println("连通分图"+(count+1)+"遍历完成！");
                 count++;
             }
         }
         return count;
     }
-
     /**
      * 得到图基本结构对象
      * @return 图基本结构对象
