@@ -152,6 +152,27 @@ public class MinTree {
      * @return double[][]  返回最小生成树的邻接矩阵
      */
     public double[][]  Kruskal(){
+        return Kruskal(this.graphMatrix.getGraph().weight);
+    }
+    /**
+     * Kruskal算法
+     * @param graph 图储存的邻接矩阵  得到最小生成树
+     * */
+    public double[][]  Kruskal(double[][] graph){
+        GraphMatrix graphMatrix=new GraphMatrix(graph);
+        this.matrix=graphMatrix.getGraph().weight;
+        //PrintGraph.printMSTmatrix(matrix);
+        this.vexnum=graphMatrix.getVexnum();
+        this.MSTmatrix=new double[this.vexnum][this.vexnum];
+        this.T=new edge[this.vexnum];
+        for (int i = 0; i < this.vexnum; i++){
+            this.T[i]=new edge();
+        }
+        for (int i = 0; i < this.vexnum; i++) {
+            for (int j = 0; j <this.vexnum ; j++) {
+                this.MSTmatrix[i][j]=0;
+            }
+        }
         /**
          *   构造T 初始 n个节点 没有边 完全非连通图
          * */
@@ -191,7 +212,6 @@ public class MinTree {
         }
         return this.MSTmatrix;
     }
-
 }
 
 
