@@ -7,6 +7,7 @@ import java.util.*;
  */
 public class MinPath {
 
+    public static double[][] pathMatrix;
     /**
      * Dijkstra 算法
      * 按路径长度递增次序产生算法：
@@ -65,20 +66,45 @@ public class MinPath {
     /**
      * 最短路径矩阵
      * @param graph    图存储的邻接矩阵
-     * @return         返回二维矩阵 matrix[i][j]表示i与j之间的最短距离
+     * @return         返回二维矩阵 pathMatrix[i][j]表示i与j之间的最短距离
      */
     public static double[][] MinPathMatrix(double[][] graph){
-        double[][] matrix=new double[graph[0].length][graph[0].length];
+        pathMatrix=new double[graph[0].length][graph[0].length];
         for (int i = 0; i <graph[0].length ; i++) {
             for (int j = 0; j <graph[0].length ; j++) {
-                matrix[i][j]=(Dijkstra(i,j,graph)).cost;
-                matrix[j][i]=matrix[i][j];
+                pathMatrix[i][j]=(Dijkstra(i,j,graph)).cost;
+                pathMatrix[j][i]=pathMatrix[i][j];
             }
         }
-        return matrix;
+        return pathMatrix;
     }
 
+    public static void Floyd(double[][] graph){
+        int i,j,k,next;
+        int max=100000000;
+        int vexnum=graph[0].length;
+        double[][] path=new double[vexnum][vexnum];
+        pathMatrix=new double[vexnum][vexnum];
 
+        for ( i = 0; i <vexnum ; i++) {
+            for ( j = 0; j <vexnum ; j++) {
+                if(graph[i][j]!=100000000) path[i][j]=j;
+                else path[i][j]=0;
+                pathMatrix[i][j]=graph[i][j];
+            }
+        }
+        
+        for(k=0;k<vexnum;k++){
+            for(i=0;i<vexnum;i++){
+                for(j=0;j<vexnum;j++){
+                    if(pathMatrix[i][j]>(pathMatrix[i][k]+pathMatrix[k][j])){
+                        pathMatrix[i][j]=pathMatrix[i][k]+pathMatrix[k][j];
+                    }
+
+                }
+            }
+        }
+    }
 }
 
 /**
