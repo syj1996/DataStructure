@@ -211,7 +211,7 @@ public class GraphMatrix {
     /**
      * @param type  type=1 深度搜索 反之为广度搜索
      * @param type1    type1=true 为显示提示文本 false不提示文本作为调用函数
-     * @return
+     * @return       返回连通分图的个数
      */
     public int TRAVER(int type,boolean type1){
         initial();

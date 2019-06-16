@@ -46,7 +46,7 @@ public class MinTree {
      * 构造函数  初始化邻接矩阵存储的图得到邻接矩阵
      */
     public MinTree(){
-        this.graphMatrix=new GraphMatrix(PrintGraph.matrix);
+        this.graphMatrix=new GraphMatrix();
         this.matrix=this.graphMatrix.getGraph().weight;
         //PrintGraph.printMSTmatrix(matrix);
         this.vexnum=this.graphMatrix.getVexnum();

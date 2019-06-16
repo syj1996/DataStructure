@@ -21,8 +21,15 @@ public class MyGraph {
 //          MinTree minTree=new MinTree();
 //          minTree.Prime(1);
 
-        MinTree mintree=new MinTree();
-        mintree.Kruskal();
+//        MinTree mintree=new MinTree();
+//        mintree.Kruskal();
+
+        double[][] d=MinPath.MinPathMatrix(PrintGraph.matrix);
+        Node  d1=(MinPath.Dijkstra(1, 5, PrintGraph.matrix));
+
+        PrintGraph.printMSTmatrix(d);
+        System.out.println(d1.cost);
+        d1.getPath();
         Scanner src=new Scanner(System.in);
         src.next();
     }
