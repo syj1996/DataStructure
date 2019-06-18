@@ -1,13 +1,21 @@
 package MyGraph;
 
-import java.util.*;
+import java.util.PriorityQueue;
+import java.util.Stack;
 
 /**
  * 最短路径类  包括静态 Dijkstra算法和Floyd算法
  */
 public class MinPath {
 
+    /**
+     * 两点之间最短路径的矩阵  需要通过Floyd算法 或  MinPathMatrix
+     */
     public static double[][] pathMatrix;
+    /**
+     * 路径矩阵存储   需要通过Floyd算法得到到下一个节点的序号用打印类 PrintGraph的静态方法打印输出
+     */
+    public static int[][] path;
     /**
      * Dijkstra 算法
      * 按路径长度递增次序产生算法：
@@ -79,32 +87,53 @@ public class MinPath {
         return pathMatrix;
     }
 
-    public static void Floyd(double[][] graph){
-        int i,j,k,next;
+    /**
+     * floyd算法得到所有顶点之间的最短路径
+     * 通过Floyd计算图G=(V,E)中各个顶点的最短路径时，需要引入两个矩阵，矩阵S中的元素a[i][j]表示顶点i(第i个顶点)到顶点j(第j个顶点)的距离。矩阵P中的元素b[i][j]，表示顶点i到顶点j经过了b[i][j]记录的值所表示的顶点。
+     * 假设图G中顶点个数为N，则需要对矩阵D和矩阵P进行N次更新。初始时，矩阵D中顶点a[i][j]的距离为顶点i到顶点j的权值；
+     * 如果i和j不相邻，则a[i][j]=∞，矩阵P的值为顶点b[i][j]的j的值。 接下来开始，对矩阵D进行N次更新。第1次更新时，
+     * 如果”a[i][j]的距离” > “a[i][0]+a[0][j]”(a[i][0]+a[0][j]表示”i与j之间经过第1个顶点的距离”)，
+     * 则更新a[i][j]为”a[i][0]+a[0][j]”,更新b[i][j]=b[i][0]。 同理，第k次更新时，
+     * 如果”a[i][j]的距离” > “a[i][k-1]+a[k-1][j]”，
+     * 则更新a[i][j]为”a[i][k-1]+a[k-1][j]”,b[i][j]=b[i][k-1]。
+     * 更新N次之后，操作完成！
+     * @param graph  图的邻接矩阵
+     * @return  最短路径矩阵
+     */
+    public static double[][] Floyd(double[][] graph){
+        int i=0,j=0,k=0,next=0;
         int max=100000000;
         int vexnum=graph[0].length;
-        double[][] path=new double[vexnum][vexnum];
+        path=new int[vexnum][vexnum];
         pathMatrix=new double[vexnum][vexnum];
 
         for ( i = 0; i <vexnum ; i++) {
             for ( j = 0; j <vexnum ; j++) {
-                if(graph[i][j]!=100000000) path[i][j]=j;
-                else path[i][j]=0;
+                if(graph[i][j]!=100000000) {
+                    path[i][j]=j;
+                }
+                else {
+                    path[i][j]=0;
+                }
                 pathMatrix[i][j]=graph[i][j];
             }
         }
-        
+
         for(k=0;k<vexnum;k++){
+            pathMatrix[k][k]=0;
             for(i=0;i<vexnum;i++){
                 for(j=0;j<vexnum;j++){
-                    if(pathMatrix[i][j]>(pathMatrix[i][k]+pathMatrix[k][j])){
-                        pathMatrix[i][j]=pathMatrix[i][k]+pathMatrix[k][j];
+                    if(pathMatrix[i][j]>(pathMatrix[i][k]+pathMatrix[k][j]) && i!=j) {
+                        pathMatrix[i][j] = pathMatrix[i][k] + pathMatrix[k][j];
+                        path[i][j] = path[i][k];
                     }
-
                 }
             }
         }
+
+        return pathMatrix;
     }
+
 }
 
 /**

@@ -24,12 +24,12 @@ public class MyGraph {
 //        MinTree mintree=new MinTree();
 //        mintree.Kruskal();
 
-        double[][] d=MinPath.MinPathMatrix(PrintGraph.matrix);
-        Node  d1=(MinPath.Dijkstra(1, 5, PrintGraph.matrix));
-
-        PrintGraph.printMSTmatrix(d);
-        System.out.println(d1.cost);
-        d1.getPath();
+        double[][] d=MinPath.MinPathMatrix(PrintGraph.matrix1);
+        Node  d1=(MinPath.Dijkstra(1, 5, PrintGraph.matrix1));
+        d=MinPath.Floyd(PrintGraph.matrix1);
+        PrintGraph.printMatrix(d);
+//        System.out.println(d1.cost);
+//        d1.getPath();
         Scanner src=new Scanner(System.in);
         src.next();
     }

@@ -7,6 +7,8 @@
       <w>endvex</w>
       <w>formvex</w>
       <w>kruskal</w>
+      <w>lchild</w>
+      <w>rchild</w>
       <w>tgraph</w>
       <w>tmatrix</w>
       <w>vexnum</w>

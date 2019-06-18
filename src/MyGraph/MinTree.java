@@ -1,6 +1,7 @@
 package MyGraph;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.TreeSet;
 
 /**
  * 生成最小生成树(Mininum Spanning Tree)
@@ -155,8 +156,9 @@ public class MinTree {
         return Kruskal(this.graphMatrix.getGraph().weight);
     }
     /**
-     * Kruskal算法
+     * Kruskal算法  通过输入参数 邻接矩阵 即可得到最小生成树
      * @param graph 图储存的邻接矩阵  得到最小生成树
+     * @return  返回最短路径矩阵
      * */
     public double[][]  Kruskal(double[][] graph){
         GraphMatrix graphMatrix=new GraphMatrix(graph);
