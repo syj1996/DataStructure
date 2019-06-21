@@ -1,5 +1,10 @@
 package Sort;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Random;
+import java.util.Set;
+
 /**
  * 程序运行时间类
  */
