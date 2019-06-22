@@ -206,6 +206,7 @@ public class binaryTree {
     /**
      * 删除节点
      * @param x 根据节点信息删除该节点
+     * @return 删除成功
      */
     public boolean remove(String x){
         if(x!=null)

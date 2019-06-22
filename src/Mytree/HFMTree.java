@@ -56,8 +56,12 @@ public class HFMTree {
         leafNum=n;
         HuffCode=new HFMCodeNode[n];
     }
+
     /**
-     *哈夫曼编码
+     * 哈夫曼编码
+     * @param hfmTree   哈夫曼树
+     * @param HuffCode  哈夫曼编码数组
+     * @param n         叶子节点数量
      */
     public void HaffmanCode(HFMTreeNode[] hfmTree,HFMCodeNode[] HuffCode,int n){
         HFMCodeNode cd=new HFMCodeNode(n);

@@ -56,7 +56,7 @@ public class AOV {
         Queue Q=new ArrayDeque();
         int m=0,k=0;
         //如果顶点的入度为零则先入队
-        for (int i = 0; i <this.G.vexnum ; i++) {
+        for (int i = 0; i <G.vexnum ; i++) {
             if(G.vexNodes[i].indegree==0) Q.add(i);
         }
 

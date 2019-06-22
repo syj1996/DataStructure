@@ -1,6 +1,5 @@
 package MyGraph;
 
-import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -17,8 +16,11 @@ public class MyGraph {
 //       graphMatrix.BFS(1);
 
             GraphList   graphList=new GraphList(PrintGraph.matrix2);
-            AOV.TopologySort(graphList);
-            PrintGraph.printArray(graphList.Tsort);
+            AOE a=new AOE(PrintGraph.matrix2);
+            a.VexElyTime();
+            a.VexDelayTime();
+            PrintGraph.printArray(a.vexETime);
+            PrintGraph.printArray(a.vexDTime);
 //        graphList.DFSL(1);
 //        graphList.BFSL(1);
 //          MinTree minTree=new MinTree();

@@ -290,6 +290,7 @@ class VexNode {
     public int outdegree=0;  //出度
     /**
      * 构造函数
+     * @param  vexterix 顶点信息
      */
     public VexNode(String vexterix) {
         this.vexterix=vexterix;
