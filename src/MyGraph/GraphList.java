@@ -1,25 +1,28 @@
 package MyGraph;
 
+import Input.InputStyle;
+
 import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
 /**
- * 邻接表存储图类   通过对 每个顶点，与其相连接的节点构成一个链表，每个节点的链表构成可以存储图结构的邻接表
+ * 邻接表存储图类   深度 广度 拓扑排序 关键路径
  */
 public class GraphList {
     /**
      * 顶点的数组
      */
-    private VexNode[] vexNodes;    //顶点的数组
+    public VexNode[] vexNodes;    //顶点的数组
     /**
      *顶点数
      */
-    private int vexnum;           //顶点数
+    public int vexnum;           //顶点数
     /**
      * 边数
      */
-    private int edgenum;          //边数
+    public int edgenum;          //边数
 
     /**
      * 初始化图的访问遍历标志   初始值为false
@@ -31,26 +34,32 @@ public class GraphList {
     /**
      * 判断是否被访问,第二次访问时要先对其置0
      */
-    private boolean visited[];    //判断是否被访问,第二次访问时要先对其置0
+    public boolean visited[];    //判断是否被访问,第二次访问时要先对其置0
     /**
      * 计数，提示文本控制
      */
     private int counter;
 
     /**
-     * 构造函数  创建邻接表存储图
+     * 构造函数  创建默认无向邻接表存储图
      */
     public GraphList() {
+        new GraphList(false);
+    }     //构造函数，创建邻接表
+
+    /**
+     * @param type  true  有向   false 无向
+     */
+    public GraphList(boolean type){
         int i,j,k,vexnum,edgenum;
         double weight;
         EdgeNode s;
 
         Scanner src=new Scanner(System.in);
         System.out.print("请输入顶点数：");
-        vexnum=src.nextInt();
+        vexnum= InputStyle.readInt("请重新输入顶点的数量:");
         System.out.print("请输入边数：");
-        edgenum=src.nextInt();
-        System.out.println("请输入顶点的信息：");
+        edgenum=InputStyle.readInt("请重新输入边的数量:");
 
         while(vexnum<=2 ||edgenum<=0 || edgenum>(vexnum*(vexnum-1)/2)){
             System.out.println("输入的顶点数和边数不正确请重新输入！");
@@ -65,21 +74,22 @@ public class GraphList {
         this.vexNodes=new VexNode[vexnum];  //顶点类数组
         this.counter=0;        //用于计数
 
-
+        System.out.println("请输入顶点的信息：");
         for ( i = 0; i <vexnum; i++) {
             j=i+1;
             System.out.print("第"+j+"个节点信息：");
-            this.vexNodes[i]=new VexNode(src.next(),null);
+            this.vexNodes[i]=new VexNode(InputStyle.readString(),null);
         }
+        if(!type)
         for ( k = 0; k <edgenum; k++) {
             System.out.println("输入"+(k+1)+"条边的键值对和权重:");
-            i=src.nextInt();   //邻接表的顶点序号
-            j=src.nextInt();  //依次输入e条边 用键值对 <i,j>表示
-            weight=src.nextDouble();  //输入的边的权值
+            i=InputStyle.readInt();   //邻接表的顶点序号
+            j=InputStyle.readInt();  //依次输入e条边 用键值对 <i,j>表示
+            weight=InputStyle.readDouble();  //输入的边的权值
 
-            if(j>=vexnum || k>=vexnum){
+            if(j>=vexnum || i>=vexnum){
                 System.out.println("输入键值对超过数组的下标,请重新输入!");
-                i--;continue;
+                k--;continue;
             }
 
             s=new EdgeNode();
@@ -94,7 +104,62 @@ public class GraphList {
             s.next=this.vexNodes[j].firstEdge;  //链表尾插法
             this.vexNodes[j].firstEdge=s;
         }
-    }     //构造函数，创建邻接表
+        else  for ( k = 0; k <edgenum; k++) {
+            System.out.println("输入"+(k+1)+"条边的键值对和权重:");
+            i=InputStyle.readInt();   //邻接表的顶点序号
+            j=InputStyle.readInt();  //依次输入e条边 用键值对 <i,j>表示
+            weight=InputStyle.readDouble();  //输入的边的权值
+
+            if(j>=vexnum || i>=vexnum){
+                System.out.println("输入键值对超过数组的下标,请重新输入!");
+                k--;continue;
+            }
+            this.vexNodes[j].indegree++;  //针对有向图记录每个点的入度
+            this.vexNodes[i].outdegree++;  //记录出度
+            s=new EdgeNode();
+            s.number=j;     //用键值对的后一个点用作邻接点的序号
+            s.weight=weight;  //表示 i，j 边的权值
+            s.next=this.vexNodes[i].firstEdge;  //链表尾插法
+            this.vexNodes[i].firstEdge=s;
+        }
+
+    }
+
+    public GraphList(double[][] matrix){
+        int i=0,j=0,vexnum=matrix[0].length,edgenum=0;
+        EdgeNode s = null;
+        this.vexnum = vexnum;   //顶点数
+        for ( i = 0; i <this.vexnum ; i++) {
+            for ( j = i+1; j < this.vexnum ; j++) {
+                if(matrix[i][j]!=100000000.0){
+                    edgenum++;
+                }
+            }
+        } //得到边数
+        this.edgenum = edgenum;  //边数
+
+
+        this.vexNodes=new VexNode[vexnum];  //顶点类数组
+        char k='a';
+        for ( i =0; i <vexnum ; i++,k++) {
+            Character a=new Character(k);
+            this.vexNodes[i]=new VexNode(a.toString());  //顶点类数组
+        }
+        this.counter=0;        //用于计数
+
+        for ( i = 0; i < vexnum; i++)
+           for ( j = 0; j <vexnum; j++) {
+               if (matrix[i][j] != 100000000) {
+                   this.vexNodes[j].indegree++;
+                   this.vexNodes[i].outdegree++;
+                   s = new EdgeNode();
+                   s.number = j;     //用键值对的后一个点用作邻接点的序号
+                   s.weight = matrix[i][j];  //表示 i，j 边的权值
+                   s.next = this.vexNodes[i].firstEdge;  //链表尾插法
+                   this.vexNodes[i].firstEdge = s;
+               }
+           }
+    }
 
     /**
      * 深度搜索
@@ -218,11 +283,17 @@ class VexNode {
      * 顶点的头指针指向最后序号的一个边  从尾到顶点
      */
     public EdgeNode firstEdge;      //顶点的头指针指向最后序号的一个边  从尾到顶点
-
+    /**
+     * 存放的顶点入度
+     */
+    public int indegree=0;   //存放的顶点入度
+    public int outdegree=0;  //出度
     /**
      * 构造函数
      */
-    public VexNode() {
+    public VexNode(String vexterix) {
+        this.vexterix=vexterix;
+        this.firstEdge=null;
     }
 
     /**

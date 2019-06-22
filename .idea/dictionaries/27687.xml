@@ -4,16 +4,27 @@
       <w>bfsl</w>
       <w>dfsl</w>
       <w>edgenum</w>
+      <w>elen</w>
       <w>endvex</w>
       <w>formvex</w>
+      <w>haffman</w>
+      <w>indegree</w>
       <w>kruskal</w>
       <w>lchild</w>
+      <w>outdegree</w>
+      <w>postorder</w>
+      <w>preorder</w>
       <w>rchild</w>
       <w>tgraph</w>
       <w>tmatrix</w>
+      <w>tsort</w>
       <w>vexnum</w>
       <w>vexnumber</w>
+      <w>vexs</w>
       <w>vexterix</w>
+      <w>vexterx</w>
+      <w>vlen</w>
+      <w>vnet</w>
     </words>
   </dictionary>
 </component>

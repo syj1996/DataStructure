@@ -1,5 +1,7 @@
 package MyGraph;
 
+import Input.InputStyle;
+
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Scanner;
@@ -46,20 +48,24 @@ public class GraphMatrix {
      * 构造函数  创建邻接矩阵 存储图的信息
      */
    public GraphMatrix( ){   //默认无向图
-       Scanner src=new Scanner(System.in);
-       int i,j,k,vexnum,edgenum;
+       new GraphMatrix(false);
+   }  //初始化构造图的邻接矩阵
+   public GraphMatrix(boolean type){   //默认无向图
+       int i,j,k,vexnum=0,edgenum=0;
 
        System.out.print("请输入顶点的数量：");
-       vexnum=src.nextInt();
+       vexnum = InputStyle.readInt("请重新输入顶点的数量:");
+
        System.out.print("请输入边的数量：");
-       edgenum=src.nextInt();
-       while(vexnum<=2 ||edgenum<=0 || edgenum>(vexnum*(vexnum-1)/2)){
-           System.out.println("输入的顶点数和边数不正确请重新输入！");
+       edgenum = InputStyle.readInt("请重新输入边的数量:");
+
+       while(vexnum<=2 ||edgenum<=0 || edgenum>(vexnum*(vexnum-1)/2)){          System.out.println("输入的顶点数和边数不正确请重新输入！");
            System.out.print("请输入顶点的数量：");
-           vexnum=src.nextInt();
+           vexnum = InputStyle.readInt("请重新输入顶点的数量:");
            System.out.print("请输入边的数量：");
-           edgenum=src.nextInt();
+           edgenum = InputStyle.readInt("请重新输入边的数量:");
        }
+
        this.edgenum=edgenum;
        this.vexnum=vexnum;
        this.graph.vexterix=new String[vexnum];  //图顶点信息
@@ -71,7 +77,7 @@ public class GraphMatrix {
        System.out.println("请输入顶点的信息：");     //顶点信息
        for ( i = 0; i < vexnum; i++) {
            System.out.print("第"+(i+1)+"个顶点的信息:");
-           graph.vexterix[i]=src.next();
+           graph.vexterix[i]=InputStyle.readString();
            this.graph.V.add(new vexterix(graph.vexterix[i],i));
        }
        for ( i = 0; i < vexnum; i++) {    // 权值矩阵初始化100000000表示无路径
@@ -79,22 +85,34 @@ public class GraphMatrix {
                this.graph.weight[i][j]=100000000;
            }
        }
-
+       if(!type)
        for ( i = 0; i < edgenum; i++) {  //读入edgenum条边
            System.out.println("读取第"+(i+1)+"条边输入 键值对和 权值：");
-            j=src.nextInt();
-            k=src.nextInt();
-            double weight=src.nextDouble();
-            if(j>=vexnum || k>=vexnum){
+           j=InputStyle.readInt();
+           k=InputStyle.readInt();
+           double weight=InputStyle.readDouble();
+           if(j>=vexnum || k>=vexnum){
                System.out.println("输入键值对超过数组的下标,请重新输入!");
                i--;continue;
-            }
-            this.graph.E.add(new edge(j,k,weight));
-            graph.weight[j][k]=weight;
-            graph.weight[k][j]=weight;
-       }
-   }  //初始化构造图的邻接矩阵
+           }
+           this.graph.E.add(new edge(j,k,weight));
+           graph.weight[j][k]=weight;
+           graph.weight[k][j]=weight;
 
+       }
+       else for ( i = 0; i < edgenum; i++) {  //读入edgenum条边
+           System.out.println("读取第"+(i+1)+"条边输入 键值对和 权值：");
+           j=InputStyle.readInt();
+           k=InputStyle.readInt();
+           double weight=InputStyle.readDouble();
+           if(j>=vexnum || k>=vexnum){
+               System.out.println("输入键值对超过数组的下标,请重新输入!");
+               i--;continue;
+           }
+           this.graph.E.add(new edge(j,k,weight));
+           graph.weight[j][k]=weight;
+       }
+   }
     /**
      * 利用原有的图邻接矩阵存储对象 构造 一个只有n个顶点的没有边的完全非连通图
      * @param graphMatrix   图邻接矩阵存储对象
@@ -282,8 +300,10 @@ class Graph{
         this.vexterix=new String[matrix[0].length];
         this.V=new TreeSet<vexterix>();
         this.E=new TreeSet<edge>();
-        for (int i = 0; i <matrix[0].length ; i++) {
-            this.vexterix[i]=String.valueOf(i);
+        char t='a';
+        for (int i = 0; i <matrix[0].length ; i++,t++) {
+            Character k=new Character(t);
+            this.vexterix[i]=k.toString();
             this.V.add(new vexterix(this.vexterix[i],i));
         }
         for (int i = 0; i <matrix[0].length ; i++) {

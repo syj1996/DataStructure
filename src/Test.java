@@ -1,3 +1,5 @@
+import Mytree.binaryTree;
+import Mytree.bitNode;
 import Sort.CreateArray;
 import Sort.printArray;
 import Sort.runTime;
@@ -5,7 +7,7 @@ import Sort.sort;
 
 public class Test {
     public static void main(String[] args) {
-        int[] a=CreateArray.arrayRandom(CreateArray.a);
+       // int[] a=CreateArray.arrayRandom(CreateArray.a);
 //        runTime pro1=new runTime("≤Â»Î≈≈–Ú");
 //        pro1.Start();
 //        sort.insertionSort(a);
@@ -47,8 +49,16 @@ public class Test {
 //         sort.countSort(a);
 //         pro7.End();
 //         pro7.result();
-        for(int i=0;i<100;i++){
 
-        }
+        binaryTree binTree=new binaryTree();
+        binTree.NRPreOrder(binTree.getRoot());
+//        binTree.add(new bitNode("sd"));
+//        binTree.Inorder(binTree.getRoot());
+//        bitNode a=binTree.search("a");
+//        System.out.println(a.info);
+        boolean ab=binTree.remove("c");
+        System.out.println(ab);
+        binTree.Inorder(binTree.getRoot());
+        System.out.println(binTree.getTreeNum());
     }
 }

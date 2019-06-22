@@ -25,11 +25,3 @@ public class treeNode {
     public String nodeInfo;
 }
 
-/**
- * 二叉树类节点类
- */
-class bitNode{
-    public String node;
-    public bitNode  lchild;
-    public bitNode  rchild;
-}

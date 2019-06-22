@@ -16,22 +16,38 @@ public class PrintGraph {
             System.out.println("\n");
         }
     }
-
+    public static int M =100000000;
     /**
-     * ≤‚ ‘æÿ’Û1
+     * ≤‚ ‘æÿ’Û1  ŒﬁœÚÕº
      */
     public static double[][] matrix1;
+    /**
+     * ≤‚ ‘æÿ’Û2  ”–œÚÕº
+     */
+    public static double[][] matrix2;
     static {
+        
         matrix1 = new double[][]{
-                {100000000, 6, 1, 5, 100000000, 100000000},
-                {6, 100000000, 5, 100000000, 3, 100000000},
-                {1, 5, 100000000, 7, 5, 4},
-                {5, 100000000, 7, 100000000, 100000000, 2},
-                {100000000, 3, 5, 100000000, 100000000, 6},
-                {100000000, 100000000, 4, 2, 6, 100000000}
+                {M, 6, 1, 5, M, M},
+                {6, M, 5, M, 3, M},
+                {1, 5, M, 7, 5, 4},
+                {5, M, 7, M, M, 2},
+                {M, 3, 5, M, M, 6},
+                {M, M, 4, 2, 6, M}
+        };
+        matrix2= new double[][]{
+                {M,6,4,5,M,M,M,M,M},
+                {M,M,M,M,1,M,M,M,M},
+                {M,M,M,M,1,M,M,M,M},
+                {M,M,M,M,M,2,M,M,M},
+                {M,M,M,M,M,M,9,7,M},
+                {M,M,M,M,M,M,M,4,M},
+                {M,M,M,M,M,M,M,M,2},
+                {M,M,M,M,M,M,M,M,4},
+                {M,M,M,M,M,M,M,M,M},
         };
     }
-
+    
     /**
      * ¥Ú”° ‰≥ˆ ¬∑æ∂æÿ’Û
      * @param path  ¬∑æ∂æÿ’Û
@@ -56,5 +72,12 @@ public class PrintGraph {
                 }
             }
         }
+    }
+
+    public static void printArray(int[] array){
+        for (int i = 0; i < array.length; i++) {
+            System.out.print(array[i]+"\t");
+        }
+        System.out.print("\n");
     }
 }
