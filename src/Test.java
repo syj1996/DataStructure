@@ -7,7 +7,8 @@ import Sort.sort;
 
 public class Test {
     public static void main(String[] args) {
-       // int[] a=CreateArray.arrayRandom(CreateArray.a);
+        int[] a=CreateArray.arrayRandom(CreateArray.a);
+        printArray.printA(a);
 //        runTime pro1=new runTime("≤Â»Î≈≈–Ú");
 //        pro1.Start();
 //        sort.insertionSort(a);

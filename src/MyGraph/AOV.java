@@ -53,7 +53,7 @@ public class AOV {
      */
     public static int TopologySort(GraphList G,int[] Tsort){
         EdgeNode p;
-        Queue Q=new ArrayDeque();
+        Queue<Integer> Q=new ArrayDeque<Integer>();
         int m=0,k=0;
         //如果顶点的入度为零则先入队
         for (int i = 0; i <G.vexnum ; i++) {
